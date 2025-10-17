@@ -42,7 +42,6 @@ public class DogApiBreedFetcher implements BreedFetcher {
             JSONObject json = new JSONObject(body);
             String status = json.optString("status");
 
-            // If the API didn't return "success", or HTTP request failed
             if (!response.isSuccessful() || !"success".equalsIgnoreCase(status)) {
                 throw new BreedNotFoundException("Breed not found: " + breed);
             }
@@ -54,7 +53,6 @@ public class DogApiBreedFetcher implements BreedFetcher {
                 subBreeds.add(subBreedsArray.getString(i));
             }
 
-            // Optional: sort for deterministic output
             Collections.sort(subBreeds);
             return subBreeds;
 
