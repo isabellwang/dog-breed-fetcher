@@ -21,10 +21,9 @@ public class DogApiBreedFetcher implements BreedFetcher {
      * Fetch the list of sub breeds for the given breed from the dog.ceo API.
      * @param breed the breed to fetch sub breeds for
      * @return list of sub breeds for the given breed
-     * @throws BreedNotFoundException if the breed does not exist (or if the API call fails for any reason)
      */
     @Override
-    public List<String> getSubBreeds(String breed) {
+    public List<String> getSubBreeds(String breed) throws BreedNotFoundException {
         breed = breed.toLowerCase(Locale.ROOT).trim();
         String url = "https://dog.ceo/api/breed/" + breed + "/list";
 
@@ -58,6 +57,9 @@ public class DogApiBreedFetcher implements BreedFetcher {
 
         } catch (IOException e) {
             throw new BreedNotFoundException("Failed to fetch sub-breeds for: " + breed);
+        }
+        catch (Exception e) {
+            throw new BreedNotFoundException("Unexpected error when parsing response for: " + breed);
         }
     }
 }
